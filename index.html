@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ربات های قاتل :وارد شوید</title>
+    <style>
+        body {
+            background-color: #0f0f0f;
+            color: #6c00b4; /* Red text */
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-image: url('https://www.transparenttextures.com/patterns/gplay.png'); /* Grungy texture */
+        }
+
+        header {
+            background-color: #1a1a1a;
+            color: #fffb00; /* Red text */
+            text-align: center;
+            padding: 1em;
+            font-size: 2em;
+            border-bottom: 1px solid #7e0077; /* Red */
+        }
+
+        section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2em;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .pc-container {
+            flex: 1;
+            min-width: 45%;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8); /* Darker box shadow for depth */
+            background-color: #1a1a1a;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .new-pc {
+            border: 2px solid #cc00ff; /* Red */
+            color: #9900ff; /* Red text */
+        }
+
+        .old-pc {
+            border: 2px solid #ffc400; /* Orange-Red */
+            color: #ffd900; /* Orange-Red text */
+        }
+
+        .pc-container:hover {
+            transform: scale(1.05);
+        }
+
+        .pc-content {
+            padding: 1.5em;
+            border-bottom: 1px solid #333;
+        }
+
+        code {
+            color: #33ff00; /* Red text for code */
+        }
+
+        .blinking-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        footer {
+            background-color: #000000;
+            color: #25639c; /* Red text */
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>وارد شو</h1>
+    </header>
+
+    <section>
+        <div class="pc-container new-pc" onclick="openWebsite('https://discord.gg/DTbupFcbYZ')">
+            <div class="pc-content">
+                <h2>ربات کارگر</h2>
+                <p>کار کن و زنده بمون</p>
+                <code class="blinking-cursor">زنده بمون</code>
+            </div>
+        </div>
+
+        <div class="pc-container old-pc" onclick="openWebsite('https://discord.gg/DTbupFcbYZ')">
+            <div class="pc-content">
+                <h2>ربات کشتار</h2>
+                <p>یا بکش یا کشته شو</p>
+                <code class="blinking-cursor">بکش</code>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; </p>
+    </footer>
+
+    <!-- Three.js script -->
+    <script src="https://threejs.org/build/three.min.js"></script>
+
+    <!-- 3D model loading script -->
+    <script>
+        // Set up scene
+        const scene = new THREE.Scene();
+
+        // Set up camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Set up renderer
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Load FBX model
+        const loader = new THREE.FBXLoader();
+        loader.load('model.fbx', (fbx) => {
+            scene.add(fbx);
+        });
+
+        // Set up animation
+        const animate = () => {
+            requestAnimationFrame(animate);
+
+            // Rotate the model (optional)
+            if (scene.children.length > 0) {
+                scene.children[0].rotation.x += 0.005;
+                scene.children[0].rotation.y += 0.005;
+            }
+
+            renderer.render(scene, camera);
+        };
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Start the animation
+        animate();
+
+        // Function to open a website
+        function openWebsite(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+
+</body>
+</html>
